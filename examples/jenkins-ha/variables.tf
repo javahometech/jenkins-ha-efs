@@ -1,5 +1,5 @@
 variable "region" {
-    default = "us-east-1"
+  default = "us-east-1"
 }
 
 variable "subnet_ids" {
@@ -8,4 +8,8 @@ variable "subnet_ids" {
 
 variable "vpc_id" {
   default = "vpc-0e189db93e233fdc7"
+}
+
+variable "app_name" {
+  default = "jenkins"
 }

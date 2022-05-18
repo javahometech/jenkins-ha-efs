@@ -1,14 +1,13 @@
-resource "random_string" "random" {
-  length           = 5
-  special          = true
-  override_special = "/@£$"
-}
 resource "aws_launch_configuration" "lc" {
   name_prefix = "${var.name_prefix}-${var.name}"
   image_id      = var.image_id
   instance_type = var.instance_type
   key_name = var.key_name
-  user_data = data.template_file.userdata.rendered
+
+  user_data = templatefile("${path.module}/userdata/userdata.sh", {
+    file_system_id = var.file_system_id
+    region = var.region
+  })
   security_groups = local.security_groups
     lifecycle {
     create_before_destroy = true
@@ -20,14 +19,6 @@ resource "aws_launch_configuration" "lc" {
       encrypted = "false"
   }
 
-}
-
-data "template_file" "userdata" {
-  template = "${file("${path.module}/userdata/userdata.sh")}"
-  vars = {
-    file_system_id = var.file_system_id
-    region = var.region
-  }
 }
 
 resource "aws_security_group" "jenkins_sg" {
