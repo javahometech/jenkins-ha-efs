@@ -31,10 +31,3 @@ module "alb" {
     vpc_id = var.vpc_id
     asg_id = module.asg.id
 }
-
-output "userdata" {
-  value = module.lc.userdata
-}
-output "file_system_id" {
-  value = module.efs.id
-}
